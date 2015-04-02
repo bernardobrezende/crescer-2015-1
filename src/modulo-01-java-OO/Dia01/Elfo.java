@@ -1,6 +1,7 @@
 
 /**
  * Define objetos Elfo
+ * quero mandar só esta linha para o commit
  * 
  * @author CWI Software
  */
