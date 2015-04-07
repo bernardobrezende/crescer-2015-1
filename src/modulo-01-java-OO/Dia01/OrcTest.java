@@ -1,5 +1,3 @@
-
-
 import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
@@ -27,9 +25,53 @@ public class OrcTest
     }
     
     @Test
+    public void orcNasceComNomeInformado() {
+        // Arrange - Montagem dos dados de teste
+        Orc umOrc;
+        String nomeEsperado = "Urukhai";
+        // Act - Execução da ação de testes
+        umOrc = new Orc(nomeEsperado);
+        // Assert - Verificação
+        assertEquals(nomeEsperado, umOrc.getNome());
+    }
+    
+    @Test
+    public void orcNasceComNomeVazio() {
+        // Arrange - Montagem dos dados de teste
+        Orc umOrc;
+        String nomeEsperado = "";
+        // Act - Execução da ação de testes
+        umOrc = new Orc(nomeEsperado);
+        // Assert - Verificação
+        assertEquals(nomeEsperado, umOrc.getNome());
+    }
+    
+    @Test
+    public void orcNasceComNomeNulo() {
+        // Arrange - Montagem dos dados de teste
+        Orc umOrc;
+        String nomeEsperado = null;
+        // Act - Execução da ação de testes
+        umOrc = new Orc(nomeEsperado);
+        // Assert - Verificação
+        assertEquals(nomeEsperado, umOrc.getNome());
+    }
+    
+    @Test
+    public void orcNasceVivo() {
+        // Arrange
+        Orc orc;
+        // Act
+        orc = new Orc();
+        // Assert
+        Status esperado = Status.VIVO;
+        assertEquals(esperado, orc.getStatus());
+    }
+    
+    @Test
     public void orcRecebeAtaqueUmaVez() {
         // Arrange - Montagem dos dados de teste
-        Orc umOrc = new Orc();
+        Orc umOrc = new Orc("Nome Grande Aqui");
         // Act
         umOrc.recebeAtaque();
         // Assert - Verificação
@@ -40,9 +82,20 @@ public class OrcTest
     }
     
     @Test
+    public void orcFeridoAposReceberAtaque() {
+        // Arrange - Montagem dos dados de teste
+        Orc umOrc = new Orc("Nome Grande Aqui");
+        // Act
+        umOrc.recebeAtaque();
+        // Assert - Verificação
+        Status statusEsperado = Status.FERIDO;
+        assertEquals(statusEsperado, umOrc.getStatus());
+    }   
+    
+    @Test
     public void orcRecebeAtaqueDuasVezes() {
         // Arrange - Montagem dos dados de teste
-        Orc umOrc = new Orc();
+        Orc umOrc = new Orc("Nome Grande Aqui");
         // Act
         umOrc.recebeAtaque();
         umOrc.recebeAtaque();
@@ -56,7 +109,7 @@ public class OrcTest
     @Test
     public void orcRecebeAtaqueCincoVezes() {
         // Arrange - Montagem dos dados de teste
-        Orc umOrc = new Orc();
+        Orc umOrc = new Orc("Nome Grande Aqui");
         // Act
         umOrc.recebeAtaque();
         umOrc.recebeAtaque();
@@ -73,7 +126,7 @@ public class OrcTest
     @Test
     public void orcRecebeAtaqueDozeVezes() {
         // Arrange - Montagem dos dados de teste
-        Orc umOrc = new Orc();
+        Orc umOrc = new Orc("Nome Grande Aqui");
         // Act
         umOrc.recebeAtaque();
         umOrc.recebeAtaque();
@@ -88,10 +141,31 @@ public class OrcTest
         umOrc.recebeAtaque();
         umOrc.recebeAtaque();
         // Assert - Verificação
-        int esperado = -10;
+        int esperado = 0;
         int resultadoObtido = umOrc.getVida();
-        
         assertEquals(esperado, resultadoObtido);
+    }
+    
+    @Test
+    public void orcMorreAoZerarVida() {
+        // Arrange - Montagem dos dados de teste
+        Orc umOrc = new Orc("Nome Grande Aqui");
+        // Act
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        umOrc.recebeAtaque();
+        // Assert - Verificação
+        Status statusEsperado = Status.MORTO;
+        assertEquals(statusEsperado, umOrc.getStatus());
     }
     
     @Test
@@ -108,7 +182,7 @@ public class OrcTest
     @Test
     public void orcToStringAposReceberAtaque() {
         // Arrange
-        Orc orc = new Orc();
+        Orc orc = new Orc("Game Shark Xiti Manha");
         // Act
         orc.recebeAtaque();
         String resultadoObtido = orc.toString();
@@ -120,7 +194,7 @@ public class OrcTest
     @Test
     public void orcToStringAposReceberDozeAtaques() {
         // Arrange - Montagem dos dados de teste
-        Orc umOrc = new Orc();
+        Orc umOrc = new Orc("Nome Grande Aqui");
         // Act
         umOrc.recebeAtaque();
         umOrc.recebeAtaque();
@@ -136,11 +210,52 @@ public class OrcTest
         umOrc.recebeAtaque();
         String resultadoObtido = umOrc.toString();
         // Assert
-        String esperado = "Vida atual: -10";
+        String esperado = "Vida atual: 0";
         assertEquals(esperado, resultadoObtido);
     }
     
+    @Test public void orcRecebeAtaqueComNumeroGeradoMenorQueZero() {
+        // Arrange
+        Orc orc = new Orc("Tom");
+        // Act
+        orc.recebeAtaque();
+        // Assert
+        int vidaEsperada = 110;
+        int experienciaEsperada = 2;
+        
+        assertEquals(vidaEsperada, orc.getVida());
+        assertEquals(experienciaEsperada, orc.getExperiencia());
+    }
     
+    @Test
+    public void orcRecebeAtaqueComNumeroEntre0e100() {
+        // Arrange
+        Orc orc = new Orc("Tom Bombadil");
+        orc.setExperiencia(1);
+        // Act
+        orc.recebeAtaque();
+        // Assert
+        int vidaEsperada = 110;
+        int experienciaEsperada = 1;
+        
+        assertEquals(vidaEsperada, orc.getVida());
+        assertEquals(experienciaEsperada, orc.getExperiencia());
+    }
+    
+    @Test
+    public void orcRecebeAtaqueComNumeroMaiorQue100() {
+        // Arrange
+        Orc orc = new Orc("Tom Bombadil");
+        orc.setExperiencia(2);
+        // Act
+        orc.recebeAtaque();
+        // Assert
+        int vidaEsperada = 100;
+        int experienciaEsperada = 2;
+        
+        assertEquals(vidaEsperada, orc.getVida());
+        assertEquals(experienciaEsperada, orc.getExperiencia());
+    }
     
     
     
