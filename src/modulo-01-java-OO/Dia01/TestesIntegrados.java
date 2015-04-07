@@ -32,16 +32,4 @@ public class TestesIntegrados
         assertEquals(toStringEsperadoOrc, orc1.toString());
         assertEquals(toStringEsperadoOrc, orc2.toString());
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
